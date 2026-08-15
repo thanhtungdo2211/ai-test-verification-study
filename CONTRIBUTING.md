@@ -2,7 +2,7 @@
 
 ## Branches
 
-- `main`: reproducible, reviewed experiment state.
+- `master`: reproducible, reviewed experiment state.
 - `setup/*`: research harness and repository configuration.
 - `run/*`: packaging of one frozen AI run; never mix candidates.
 - `analysis/*`: data aggregation, figures, and report analysis.
