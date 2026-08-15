@@ -50,7 +50,7 @@ make check
 ├── spec/                       # Public experiment protocol
 ├── src/topic7_experiment/      # Research metrics and validation harness
 ├── tests/                      # Harness tests
-└── tests_independent/          # Frozen acceptance/property tests (created later)
+└── tests_independent/          # Independent acceptance/property test suite
 ```
 
 ## Controlled workflow
@@ -62,6 +62,11 @@ make check
 5. The team runs AI-only tests, independent tests, coverage, and mutation testing.
 6. Scripts generate measurements and figures from raw evidence.
 7. The team publishes the oracle with the final evidence package after the experiment.
+
+The independent-suite gate can be checked before candidate runs with
+`uv run python scripts/check_independent.py`.  Once candidate artifacts exist,
+`scripts/run_tests.py` records immutable baseline logs and
+`scripts/aggregate_results.py --force` rebuilds the CSV and SVG figures.
 
 Full details:
 
@@ -81,4 +86,3 @@ It exits non-zero when required fields or inconsistent score inputs are found.
 ## AI-use disclosure
 
 Every AI-assisted artifact must record the tool, displayed model, timestamp, prompt/transcript, purpose, operator, and any human edits. Do not place unverifiable AI-generated claims or citations in the report.
-

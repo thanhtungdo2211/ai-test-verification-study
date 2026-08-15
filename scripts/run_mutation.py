@@ -29,6 +29,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--candidate", required=True, help="candidate ID such as run-01")
     parser.add_argument("--suite", required=True, choices=("ai-only", "full"))
     parser.add_argument("--max-children", type=int, default=1)
+    parser.add_argument("--root", type=Path, default=ROOT, help="repository root")
     return parser.parse_args()
 
 
@@ -51,6 +52,10 @@ def mutmut_config(test_paths: list[str]) -> str:
     copied = ", ".join(json.dumps(path) for path in test_paths)
     return f"""[tool.pytest.ini_options]
 pythonpath = ["src"]
+markers = [
+  "ai_generated: tests generated in the same context as candidate code",
+  "independent: human-oracle and property-based verification tests",
+]
 
 [tool.mutmut]
 source_paths = ["src"]
@@ -72,6 +77,43 @@ def run_command(command: list[str], cwd: Path) -> subprocess.CompletedProcess[st
     )
 
 
+def mutation_counts(output: Path) -> dict[str, int]:
+    """Extract counters from mutmut's exported stats when available."""
+
+    stats_path = output / "mutmut-cicd-stats.json"
+    if not stats_path.is_file():
+        return {}
+    try:
+        data = json.loads(stats_path.read_text(encoding="utf-8"))
+    except (OSError, TypeError, ValueError, json.JSONDecodeError):
+        return {}
+    if not isinstance(data, dict):
+        return {}
+    result: dict[str, int] = {}
+    for name in ("killed", "survived", "timeout", "error", "equivalent", "total"):
+        for key in (name, f"{name}_mutants", f"{name}_tests"):
+            value = data.get(key)
+            if isinstance(value, int) and value >= 0:
+                result[name] = value
+                break
+    if "total" not in result and isinstance(data.get("all"), int):
+        result["total"] = data["all"]
+    if "error" not in result:
+        result["error"] = sum(
+            int(data.get(name, 0))
+            for name in (
+                "no_tests",
+                "skipped",
+                "suspicious",
+                "check_was_interrupted_by_user",
+                "segfault",
+                "caught_by_type_check",
+            )
+            if isinstance(data.get(name, 0), int) and data.get(name, 0) >= 0
+        )
+    return result
+
+
 def main() -> int:
     args = parse_args()
     if not RUN_ID_PATTERN.fullmatch(args.candidate):
@@ -79,9 +121,10 @@ def main() -> int:
     if args.max_children < 1:
         raise SystemExit("--max-children must be positive")
 
-    candidate = ROOT / "candidates" / args.candidate
+    root = args.root.resolve()
+    candidate = root / "candidates" / args.candidate
     output_group = "mutation-ai-only" if args.suite == "ai-only" else "mutation-independent"
-    output = ROOT / "results" / output_group / args.candidate
+    output = root / "results" / output_group / args.candidate
     if output.exists() and any(output.iterdir()):
         raise SystemExit(f"refusing to overwrite existing evidence: {output}")
     output.mkdir(parents=True, exist_ok=True)
@@ -95,7 +138,7 @@ def main() -> int:
         test_paths = ["tests_ai"]
         if args.suite == "full":
             copy_required_tree(
-                ROOT / "tests_independent",
+                root / "tests_independent",
                 work / "tests_independent",
                 "independent tests",
             )
@@ -154,7 +197,23 @@ def main() -> int:
         "mutation_returncode": None if mutation is None else mutation.returncode,
         "results_returncode": None if results is None else results.returncode,
         "export_returncode": None if export is None else export.returncode,
+        "command": {
+            "baseline": [sys.executable, "-m", "pytest", "-q", *test_paths]
+            if baseline is not None
+            else None,
+            "mutation": [
+                sys.executable,
+                "-m",
+                "mutmut",
+                "run",
+                "--max-children",
+                str(args.max_children),
+            ]
+            if mutation is not None
+            else None,
+        },
     }
+    manifest.update(mutation_counts(output))
     (output / "manifest.json").write_text(
         json.dumps(manifest, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",

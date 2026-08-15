@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Topic 7 run metadata",
+  "type": "object",
+  "required": [
+    "run_id",
+    "tool",
+    "model_displayed",
+    "started_at",
+    "ended_at",
+    "context_clean",
+    "clarification_asked",
+    "ambiguities_detected",
+    "followup_used",
+    "human_edits",
+    "raw_response_path",
+    "transcript_path",
+    "operator"
+  ],
+  "properties": {
+    "run_id": {"type": "string", "pattern": "^run-[0-9]{2}$"},
+    "tool": {"type": "string", "minLength": 1},
+    "model_displayed": {"type": "string", "minLength": 1},
+    "started_at": {"type": "string", "format": "date-time"},
+    "ended_at": {"type": "string", "format": "date-time"},
+    "context_clean": {"enum": ["yes", "no", "NA"]},
+    "clarification_asked": {"enum": ["yes", "no", "NA"]},
+    "ambiguities_detected": {"type": ["integer", "string"]},
+    "followup_used": {"enum": ["yes", "no", "NA"]},
+    "human_edits": {"type": ["integer", "string"]},
+    "raw_response_path": {"type": "string", "minLength": 1},
+    "transcript_path": {"type": "string", "minLength": 1},
+    "operator": {"type": "string", "minLength": 1}
+  }
+}

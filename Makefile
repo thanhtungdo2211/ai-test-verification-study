@@ -1,4 +1,4 @@
-.PHONY: sync format lint test coverage check validate
+.PHONY: sync format lint test coverage independent check validate
 
 sync:
 	uv sync --locked
@@ -20,5 +20,7 @@ coverage:
 validate:
 	uv run topic7 validate-data
 
-check: lint coverage validate
+independent:
+	uv run python scripts/check_independent.py
 
+check: lint coverage validate independent
