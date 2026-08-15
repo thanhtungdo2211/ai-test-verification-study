@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
   workflow_dispatch:
 
@@ -36,4 +36,3 @@ jobs:
 
       - name: Validate experiment data
         run: make validate
-
