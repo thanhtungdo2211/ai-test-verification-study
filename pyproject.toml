@@ -1,0 +1,68 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "topic7-ai-testing-study"
+version = "0.1.0"
+description = "Reproducible research harness for studying self-confirming AI-generated code and tests"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "Proprietary - academic coursework" }
+authors = [{ name = "IT4490 Topic 7 Team" }]
+dependencies = []
+
+[dependency-groups]
+dev = [
+  "hypothesis>=6.0",
+  "mutmut>=3.0",
+  "pre-commit>=4.6.2",
+  "pytest>=8.0",
+  "pytest-cov>=5.0",
+  "ruff>=0.9",
+]
+
+[project.scripts]
+topic7 = "topic7_experiment.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/topic7_experiment"]
+
+[tool.pytest.ini_options]
+addopts = [
+  "--strict-config",
+  "--strict-markers",
+  "--showlocals",
+  "-ra",
+]
+testpaths = ["tests"]
+markers = [
+  "ai_generated: tests generated in the same context as candidate code",
+  "independent: human-oracle and property-based verification tests",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["topic7_experiment"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 90
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = [
+  "candidates",
+  "experiments/transcripts",
+  "results",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "RUF"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+

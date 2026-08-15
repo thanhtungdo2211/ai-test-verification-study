@@ -1,0 +1,8 @@
+config:
+  MD012: false
+  MD013: false
+  MD036: false
+
+ignores:
+  - .github/pull_request_template.md
+  - docs/topic7.md

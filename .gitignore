@@ -1,0 +1,49 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.hypothesis/
+
+# Virtual environments and local tooling
+.venv/
+venv/
+env/
+.direnv/
+.env
+.env.*
+!.env.example
+
+# Coverage and mutation-testing runtime state
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+mutants/
+.mutmut-cache/
+mutmut-cache/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Editors and operating systems
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Private pre-experiment material. Publish it only after all candidate runs
+# and independent tests have been frozen.
+private/
+
+# Temporary exports
+*.tmp
+*.bak
+submission-*.zip
+

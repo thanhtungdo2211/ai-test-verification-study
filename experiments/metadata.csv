@@ -1,0 +1,2 @@
+run_id,tool,model_displayed,started_at,ended_at,context_clean,clarification_asked,ambiguities_detected,followup_used,human_edits,raw_response_path,transcript_path,operator
+

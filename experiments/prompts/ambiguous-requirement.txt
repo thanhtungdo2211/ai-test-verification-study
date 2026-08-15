@@ -1,0 +1,2 @@
+Create a Python function `calculate_transfer_fee(amount_vnd, is_vip=False)`. The transfer fee is 1% of the transferred amount, with a minimum of 5,000 VND and a maximum of 50,000 VND. VIP customers receive a 20% discount. Round the fee to the nearest 1,000 VND. Invalid amounts must be rejected. Provide the implementation and a complete pytest test suite.
+

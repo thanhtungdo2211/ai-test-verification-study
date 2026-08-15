@@ -1,0 +1,8 @@
+ambiguity_id,description,detected_definition
+A01,Order of VIP discount and minimum or maximum clamp,AI explicitly asks or records which operation happens first
+A02,Rounding mode,AI explicitly distinguishes half-up half-even or another tie rule
+A03,Rounding stage,AI identifies whether rounding occurs before or after clamp or discount
+A04,Boundary inclusivity,AI identifies the behavior at exactly 500000 or 5000000 VND
+A05,Valid amount types,AI identifies whether integers decimals floats strings or bool are accepted
+A06,Invalid-input exception,AI identifies the exception type or error contract
+

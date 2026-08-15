@@ -1,0 +1,58 @@
+name: Mutation testing
+
+on:
+  workflow_dispatch:
+    inputs:
+      candidate:
+        description: Frozen candidate to evaluate
+        required: true
+        type: choice
+        options:
+          - run-01
+          - run-02
+          - run-03
+          - run-04
+          - run-05
+          - run-06
+      suite:
+        description: Test-suite configuration
+        required: true
+        type: choice
+        options:
+          - ai-only
+          - full
+
+permissions:
+  contents: read
+
+jobs:
+  mutation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install locked dependencies
+        run: uv sync --locked
+
+      - name: Run mutation wrapper
+        run: >-
+          uv run python scripts/run_mutation.py
+          --candidate "${{ inputs.candidate }}"
+          --suite "${{ inputs.suite }}"
+
+      - name: Upload mutation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mutation-${{ inputs.candidate }}-${{ inputs.suite }}
+          path: results/mutation-*/${{ inputs.candidate }}/
+          if-no-files-found: warn
+

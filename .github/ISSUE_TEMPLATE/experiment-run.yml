@@ -1,0 +1,38 @@
+name: Experiment run
+description: Track one frozen AI candidate-generation run
+title: "[RUN] run-XX — tool/model"
+labels: [experiment]
+body:
+  - type: input
+    id: run_id
+    attributes:
+      label: Run ID
+      placeholder: run-01
+    validations:
+      required: true
+  - type: input
+    id: tool_model
+    attributes:
+      label: Tool and displayed model
+    validations:
+      required: true
+  - type: checkboxes
+    id: controls
+    attributes:
+      label: Protocol controls
+      options:
+        - label: Clean context used
+          required: true
+        - label: Only the frozen public prompt was supplied initially
+          required: true
+        - label: Raw transcript saved before packaging
+          required: true
+        - label: Human edits recorded
+          required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence paths and notes
+    validations:
+      required: true
+
