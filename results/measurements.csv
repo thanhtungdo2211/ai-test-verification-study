@@ -1,2 +1,1 @@
 run_id,ai_tests_collected,ai_tests_passed,line_coverage,branch_coverage,acceptance_passed,acceptance_total,properties_failed,mutants_total_ai,killed_ai,survived_ai,timeout_ai,error_ai,equivalent_ai,mutants_total_full,killed_full,survived_full,timeout_full,error_full,equivalent_full,raw_score_ai,adjusted_score_ai,raw_score_full,adjusted_score_full
-
