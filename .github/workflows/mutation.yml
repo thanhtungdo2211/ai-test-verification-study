@@ -50,7 +50,7 @@ jobs:
 
       - name: Upload mutation evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: mutation-${{ inputs.candidate }}-${{ inputs.suite }}
           path: results/mutation-*/${{ inputs.candidate }}/
