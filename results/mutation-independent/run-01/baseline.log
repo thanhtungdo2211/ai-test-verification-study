@@ -1,0 +1,33 @@
+.....................................................F................F. [ 85%]
+...........s                                                             [100%]
+=================================== FAILURES ===================================
+_______________ test_invalid_amount_types_raise_type_error[1.5] ________________
+
+calculate_transfer_fee = <function calculate_transfer_fee at 0x7c1b90127f60>
+amount_vnd = 1.5
+
+    @pytest.mark.independent
+    @pytest.mark.parametrize("amount_vnd", [1.5, "1000", True, None])
+    def test_invalid_amount_types_raise_type_error(
+        calculate_transfer_fee: object, amount_vnd: object
+    ) -> None:
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+/home/tung/code/IT4490/tests_independent/test_acceptance.py:37: Failed
+___________________________ test_type_contract[1.0] ____________________________
+
+calculate_transfer_fee = <function calculate_transfer_fee at 0x7c1b90127f60>
+invalid = 1.0
+
+    @pytest.mark.independent
+    @pytest.mark.parametrize("invalid", [False, True, 1.0, "1", None, [], {}])
+    def test_type_contract(calculate_transfer_fee: Callable[..., int], invalid: object) -> None:
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+/home/tung/code/IT4490/tests_independent/test_properties.py:92: Failed
+=========================== short test summary info ============================
+FAILED tests_independent/test_acceptance.py::test_invalid_amount_types_raise_type_error[1.5]
+FAILED tests_independent/test_properties.py::test_type_contract[1.0] - Failed...
+2 failed, 81 passed, 1 skipped in 0.45s

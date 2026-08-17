@@ -1,0 +1,10 @@
+{
+  "candidate": "run-01",
+  "suite": "ai-only",
+  "started_at": "2026-08-15T09:10:37.242348+00:00",
+  "ended_at": "2026-08-15T09:10:37.242547+00:00",
+  "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+  "command": null,
+  "returncode": 2,
+  "status": "non-executable"
+}

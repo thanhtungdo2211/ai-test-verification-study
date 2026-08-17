@@ -172,7 +172,7 @@ def main() -> int:
             )
             (output / "mutation.log").write_text(mutation.stdout, encoding="utf-8")
             results = run_command(
-                [sys.executable, "-m", "mutmut", "results", "--all"],
+                [sys.executable, "-m", "mutmut", "results", "--all", "true"],
                 cwd=work,
             )
             (output / "results.txt").write_text(results.stdout, encoding="utf-8")
@@ -183,7 +183,14 @@ def main() -> int:
             stats = work / "mutants" / "mutmut-cicd-stats.json"
             if stats.is_file():
                 shutil.copy2(stats, output / "mutmut-cicd-stats.json")
-            return_code = mutation.returncode
+            return_code = next(
+                (
+                    code
+                    for code in (mutation.returncode, results.returncode, export.returncode)
+                    if code != 0
+                ),
+                0,
+            )
 
     manifest = {
         "candidate": args.candidate,

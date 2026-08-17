@@ -19,6 +19,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from scripts.run_tests import parse_coverage
 from topic7_experiment.metrics import MutationCounts
 from topic7_experiment.validation import MEASUREMENT_HEADERS
 
@@ -139,6 +140,7 @@ def acceptance_counts(path: Path) -> tuple[int | None, int | None, int | None]:
         case
         for case in _junit_cases(path)
         if "acceptance" in (case.attrib.get("name", "") + case.attrib.get("classname", "")).lower()
+        and not case.attrib.get("name", "").lower().startswith("test_reference_")
     ]
     if not cases:
         return None, None, None
@@ -201,7 +203,7 @@ def _mutation_fields(evidence: MutationEvidence) -> dict[str, Any]:
         "survived": counts.survived,
         "timeout": counts.timeout,
         "error": counts.error,
-        "equivalent": counts.equivalent,
+        "equivalent": evidence.equivalent,
         "raw": counts.raw_score,
         "adjusted": adjusted,
     }
@@ -216,6 +218,10 @@ def measurement_row(root: Path, metadata: dict[str, str]) -> dict[str, str]:
     full_manifest = _manifest(full_dir)
     independent_manifest = _manifest(independent_dir)
     coverage_manifest = full_manifest or independent_manifest or ai_manifest
+    coverage_dir = (
+        full_dir if full_manifest else independent_dir if independent_manifest else ai_dir
+    )
+    coverage_report = parse_coverage(coverage_dir / "coverage.json")
     acceptance_dir = full_dir if (full_dir / "junit.xml").is_file() else independent_dir
     acceptance_passed, acceptance_total, properties_failed = acceptance_counts(
         acceptance_dir / "junit.xml"
@@ -230,8 +236,9 @@ def measurement_row(root: Path, metadata: dict[str, str]) -> dict[str, str]:
         "run_id": run_id,
         "ai_tests_collected": ai_manifest.get("collected"),
         "ai_tests_passed": ai_manifest.get("passed"),
-        "line_coverage": coverage_manifest.get("line_coverage"),
-        "branch_coverage": coverage_manifest.get("branch_coverage"),
+        "line_coverage": coverage_manifest.get("line_coverage") or coverage_report["line_coverage"],
+        "branch_coverage": coverage_manifest.get("branch_coverage")
+        or coverage_report["branch_coverage"],
         "acceptance_passed": acceptance_passed,
         "acceptance_total": acceptance_total,
         "properties_failed": properties_failed,
