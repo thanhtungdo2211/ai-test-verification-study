@@ -1,0 +1,24 @@
+{
+  "candidate": "run-01",
+  "suite": "full",
+  "started_at": "2026-08-15T14:17:20.651048+00:00",
+  "ended_at": "2026-08-15T14:17:21.332410+00:00",
+  "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+  "mutmut": "3.7.0",
+  "candidate_python_sha256": "5dbd1944878202f1051c9d06c4bdc50cc9a3480d78e09bf3814c6775ef10dddc",
+  "baseline_returncode": 1,
+  "mutation_returncode": null,
+  "results_returncode": null,
+  "export_returncode": null,
+  "command": {
+    "baseline": [
+      "/home/tung/code/IT4490/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests_ai",
+      "tests_independent"
+    ],
+    "mutation": null
+  }
+}

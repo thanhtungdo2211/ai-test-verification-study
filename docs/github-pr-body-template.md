@@ -1,3 +1,5 @@
+# Candidate PR body template
+
 ## Candidate run
 
 - Run ID: `run-XX`
@@ -40,3 +42,4 @@ experiments/packaging-fixes/run-XX-*.patch # only if applicable
 
 The maintainer will run evaluation after merge. This PR does not claim test,
 coverage or mutation results.
+

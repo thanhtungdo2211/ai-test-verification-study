@@ -1,0 +1,6 @@
+--- /dev/null
++++ b/candidates/run-01/src/transfer_fee/__init__.py
+@@
++from .calculator import calculate_transfer_fee
++
++__all__ = ["calculate_transfer_fee"]

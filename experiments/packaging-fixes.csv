@@ -1,2 +1,2 @@
 run_id,changed_at,changed_by,file,change_type,reason,patch_path,reviewer
-
+run-01,2026-08-15T14:14:06Z,Codex,candidates/run-01/src/transfer_fee/__init__.py,packaging-only,"Added package re-export required by the AI test import; business logic unchanged.",experiments/packaging-fixes/run-01-init.patch,TBD

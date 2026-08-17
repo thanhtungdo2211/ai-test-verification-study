@@ -82,7 +82,7 @@ def parse_coverage(path: Path) -> dict[str, float | None]:
         if not isinstance(totals, dict):
             return {"line_coverage": None, "branch_coverage": None}
         line = totals.get("percent_covered")
-        branch = totals.get("percent_covered_branches")
+        branch = totals.get("percent_covered_branches", totals.get("percent_branches_covered"))
         return {
             "line_coverage": round(float(line), 2) if line is not None else None,
             "branch_coverage": round(float(branch), 2) if branch is not None else None,

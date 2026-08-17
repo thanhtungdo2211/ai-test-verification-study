@@ -1,0 +1,44 @@
+.....................................................F................F. [ 85%]
+...........s                                                             [100%]
+=================================== FAILURES ===================================
+_______________ test_invalid_amount_types_raise_type_error[1.5] ________________
+
+calculate_transfer_fee = <function calculate_transfer_fee at 0x78550e00dee0>
+amount_vnd = 1.5
+
+    @pytest.mark.independent
+    @pytest.mark.parametrize("amount_vnd", [1.5, "1000", True, None])
+    def test_invalid_amount_types_raise_type_error(
+        calculate_transfer_fee: object, amount_vnd: object
+    ) -> None:
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+amount_vnd = 1.5
+calculate_transfer_fee = <function calculate_transfer_fee at 0x78550e00dee0>
+
+../../tests_independent/test_acceptance.py:37: Failed
+___________________________ test_type_contract[1.0] ____________________________
+
+calculate_transfer_fee = <function calculate_transfer_fee at 0x78550e00dee0>
+invalid = 1.0
+
+    @pytest.mark.independent
+    @pytest.mark.parametrize("invalid", [False, True, 1.0, "1", None, [], {}])
+    def test_type_contract(calculate_transfer_fee: Callable[..., int], invalid: object) -> None:
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+calculate_transfer_fee = <function calculate_transfer_fee at 0x78550e00dee0>
+invalid    = 1.0
+
+../../tests_independent/test_properties.py:92: Failed
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.3-final-0 ________________
+
+Coverage JSON written to file /tmp/topic7-run-01-full-z1iy5ddb/coverage.json
+=========================== short test summary info ============================
+SKIPPED [1] ../../tests_independent/test_reference_suite.py:18: reference self-check is opt-in
+FAILED ../../tests_independent/test_acceptance.py::test_invalid_amount_types_raise_type_error[1.5]
+FAILED ../../tests_independent/test_properties.py::test_type_contract[1.0] - ...
+2 failed, 81 passed, 1 skipped in 0.86s

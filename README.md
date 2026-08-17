@@ -72,6 +72,9 @@ Full details:
 
 - [Project specification](docs/topic7-project-spec.md)
 - [Execution plan](docs/topic7-project-plan.md)
+- [AI operator run guide](docs/ai-run-operator-guide.md)
+- [GitHub issue/PR candidate workflow](docs/github-candidate-pr-workflow.md)
+- [Evaluation runbook](docs/evaluation-runbook.md)
 - [Contribution guide](CONTRIBUTING.md)
 
 ## Data validation
