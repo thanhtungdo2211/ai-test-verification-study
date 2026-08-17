@@ -1,0 +1,29 @@
+{
+  "candidate": "run-02",
+  "suite": "full",
+  "started_at": "2026-08-17T04:34:33.427769+00:00",
+  "ended_at": "2026-08-17T04:34:34.513273+00:00",
+  "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+  "command": [
+    "/home/tung/code/IT4490/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "--junitxml",
+    "/tmp/topic7-run-02-full-4r75gshu/junit.xml",
+    "--cov=src",
+    "--cov-branch",
+    "--cov-report=json:/tmp/topic7-run-02-full-4r75gshu/coverage.json",
+    "tests_ai",
+    "/home/tung/code/IT4490/.synthetic-evaluation/tests_independent"
+  ],
+  "returncode": 0,
+  "status": "completed",
+  "collected": 58,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 1,
+  "passed": 57,
+  "line_coverage": 100.0,
+  "branch_coverage": 100.0
+}

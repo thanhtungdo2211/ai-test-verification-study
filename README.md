@@ -75,6 +75,8 @@ Full details:
 - [AI operator run guide](docs/ai-run-operator-guide.md)
 - [GitHub issue/PR candidate workflow](docs/github-candidate-pr-workflow.md)
 - [Evaluation runbook](docs/evaluation-runbook.md)
+- [Report outline](report/report-outline.md)
+- [Synthetic pilot snapshot](pilot/synthetic-evaluation/README.md)
 - [Contribution guide](CONTRIBUTING.md)
 
 ## Data validation

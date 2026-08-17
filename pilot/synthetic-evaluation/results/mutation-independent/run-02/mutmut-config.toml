@@ -1,0 +1,13 @@
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+markers = [
+  "ai_generated: tests generated in the same context as candidate code",
+  "independent: human-oracle and property-based verification tests",
+]
+
+[tool.mutmut]
+source_paths = ["src"]
+also_copy = ["tests_ai", "tests_independent"]
+pytest_add_cli_args = ["--import-mode=prepend"]
+pytest_add_cli_args_test_selection = ["tests_ai", "tests_independent"]
+use_git_change_detection = false
