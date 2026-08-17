@@ -19,7 +19,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from scripts.run_tests import parse_coverage
+try:
+    from scripts.run_tests import parse_coverage
+except ModuleNotFoundError as exc:
+    if exc.name != "scripts":
+        raise
+    from run_tests import parse_coverage
 from topic7_experiment.metrics import MutationCounts
 from topic7_experiment.validation import MEASUREMENT_HEADERS
 
@@ -328,6 +333,12 @@ def generate_figures(root: Path, rows: list[dict[str, str]]) -> None:
     output = root / "results" / "figures"
     output.mkdir(parents=True, exist_ok=True)
     labels = [row["run_id"] for row in rows]
+    title_prefix = (
+        "PILOT — SYNTHETIC — " if (root / "SYNTHETIC_NOT_RESEARCH_DATA.md").is_file() else ""
+    )
+
+    def title(value: str) -> str:
+        return title_prefix + value
 
     def values(name: str) -> list[tuple[str, float | None]]:
         return [
@@ -335,12 +346,14 @@ def generate_figures(root: Path, rows: list[dict[str, str]]) -> None:
         ]
 
     _svg_bar_chart(
-        output / "mutation-scores.svg", "Mutation score — AI-only", values("raw_score_ai")
+        output / "mutation-scores.svg", title("Mutation score — AI-only"), values("raw_score_ai")
     )
-    _svg_bar_chart(output / "coverage-acceptance.svg", "Line coverage", values("line_coverage"))
+    _svg_bar_chart(
+        output / "coverage-acceptance.svg", title("Line coverage"), values("line_coverage")
+    )
     _svg_bar_chart(
         output / "property-failures.svg",
-        "Property failures",
+        title("Property failures"),
         values("properties_failed"),
         maximum=max(
             [
@@ -353,7 +366,7 @@ def generate_figures(root: Path, rows: list[dict[str, str]]) -> None:
     )
     _svg_bar_chart(
         output / "mutation-survivors.svg",
-        "Surviving mutants — full suite",
+        title("Surviving mutants — full suite"),
         values("survived_full"),
         maximum=max(
             [
@@ -366,7 +379,7 @@ def generate_figures(root: Path, rows: list[dict[str, str]]) -> None:
     )
     _svg_bar_chart(
         output / "acceptance-score.svg",
-        "Acceptance pass rate",
+        title("Acceptance pass rate"),
         [
             (
                 label,

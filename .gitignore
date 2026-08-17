@@ -47,3 +47,5 @@ private/
 *.bak
 submission-*.zip
 
+# Local synthetic pipeline demos. Never include these in research evidence.
+.synthetic-evaluation*/

@@ -5,6 +5,18 @@ Dùng runbook này sau khi `run-01`, `run-02`, … đã được merge vào `mas
 AI tests, oracle hoặc raw logs. Mỗi `run-XX` phải dùng đúng cùng ID trong
 `candidates/`, `results/`, `experiments/metadata.csv` và report.
 
+## Chạy thử bằng dữ liệu synthetic
+
+Nếu chỉ cần kiểm tra pipeline trước khi có official runs, dùng:
+
+```bash
+uv run python scripts/run_synthetic_demo.py
+```
+
+Kết quả được tạo dưới `.synthetic-evaluation/`, có nhãn
+`SYNTHETIC_NOT_RESEARCH_DATA` và bị git-ignore. Không copy các file này vào
+`candidates/`, `experiments/metadata.csv`, `results/` hoặc bài luận chính thức.
+
 ## 0. Kiểm tra trước khi chạy
 
 ```bash
@@ -198,4 +210,3 @@ mỗi dòng tới manifest/log/transcript. Với mỗi run tối thiểu báo c�
 - `raw_score_ai` và `raw_score_full` nếu có;
 - killed/survived/timeout/error;
 - adjusted score chỉ khi equivalent review đã được phê duyệt.
-

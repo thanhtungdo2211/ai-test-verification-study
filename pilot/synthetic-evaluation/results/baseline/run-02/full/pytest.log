@@ -1,0 +1,8 @@
+.........................................................s               [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.3-final-0 ________________
+
+Coverage JSON written to file /tmp/topic7-run-02-full-4r75gshu/coverage.json
+=========================== short test summary info ============================
+SKIPPED [1] ../../../tests_independent/test_reference_suite.py:18: reference self-check is opt-in
+57 passed, 1 skipped in 0.79s
